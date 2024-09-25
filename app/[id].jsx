@@ -31,7 +31,7 @@ export default function Detail() {
   useEffect(() => {
     (async () => {
       const m = await getMovieDetail();
-
+      
       setMovieDetail(m);
       setLoading(false);
     })();

@@ -19,7 +19,7 @@ const config = {
   },
 };
 
-export default function Index() {
+export default function Acceuil() {
   const [text, setText] = useState("");
   const [loading, setLoading] = useState(true);
   const [movieList, setMovieList] = useState([]);
@@ -35,7 +35,8 @@ export default function Index() {
   useEffect(() => {
     (async () => {
       const m = await getMovies(page);
-      setMovieList(m.results);
+      console.log("movies", m)
+      setMovieList(m.results ?? []);
       setLoading(false);
     })();
   }, []);
@@ -57,6 +58,8 @@ export default function Index() {
   const onEndReached = async () => {
     setLoading(true);
     const m = await getMovies(page + 1);
+    
+    console.log("_________________movieList", m);
     setMovieList((oldMovies) => [...oldMovies, ...m.results]);
     setLoading(false);
     setPage((page) => page + 1);
@@ -78,7 +81,7 @@ export default function Index() {
           flex: 5,
         }}>
         <VirtualizedList
-          data={movieList}
+          data={movieList }
           renderItem={renderItem}
           ItemSeparatorComponent={renderSeparator}
           ListFooterComponent={HeaderFooter}

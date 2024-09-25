@@ -1,15 +1,24 @@
-import { Text, View, StyleSheet, Image } from "react-native";
+import { useState } from "react";
+import { Text, View, StyleSheet, Image, ActivityIndicator } from "react-native";
 
 const ListItem = ({ item }) => {
   const image = `https://www.themoviedb.org/t/p/w600_and_h900_bestv2/${item.poster_path}`;
+
+  const [loading, setLoading] = useState(true);
+
   return (
     <View style={styles.card}>
+      
+      {loading && <ActivityIndicator animating={loading} size="small" color="#0000ff" hidesWhenStopped={true} />}
       <Image
         source={{ uri: image }}
         style={styles.image}
+        onLoad={() => setLoading(false)} // Utilisation d'une fonction ici
+        onError={() => setLoading(false)}
         // resizeMode="center"
         // resizeMethod="resize"
       />
+      
       <View style={styles.info}>
         <Text style={styles.name}>{item.title}</Text>
         <Text style={styles.details}>
