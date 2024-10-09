@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import { View, Text, Image, StyleSheet, ActivityIndicator } from "react-native";
+import { View, Text, Image, StyleSheet, ActivityIndicator, TouchableOpacity } from "react-native";
 import { useLocalSearchParams } from "expo-router";
+import { useNavigation } from "expo-router";
 
 import { token } from "@/scripts/tools";
 
@@ -17,6 +18,23 @@ export default function Detail() {
   const { id } = useLocalSearchParams();
   const [loading, setLoading] = useState(true);
   const [movieDetail, setMovieDetail] = useState(null);
+
+  const navigation = useNavigation();
+  navigation.setOptions({
+    headerTitle: movieDetail?.title?? '',
+    headerTitleStyle:{
+      color: 'blue'
+    },
+    headerLeft: () => (
+      <TouchableOpacity onPress={() => navigation.goBack()} style={{ marginLeft: -1, marginRight:40 }}>
+          <Text style={{ color: 'black', fontSize: 15, fontWeight:700 }}>{"< Accueil"}</Text>
+      </TouchableOpacity>
+  ),
+  })
+
+
+
+
 
   const getMovieDetail = async () => {
     try {
@@ -65,22 +83,24 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   title: {
-    fontSize: 24,
+    fontSize: 19,
     fontWeight: "bold",
-    marginBottom: 20,
+    marginBottom: 10,
     alignSelf: "center",
   },
   poster: {
     width: "auto",
-    height: 450,
-    marginBottom: 20,
+    height: 200,
+    marginBottom: 10,
   },
   description: {
     fontSize: 16,
     marginBottom: 10,
   },
   details: {
-    fontSize: 14,
+    alignItems: 'center',
+    justifyContent: "space-between",
+    fontSize: 15,
     color: "gray",
   },
 });
